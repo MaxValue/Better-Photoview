@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Windows Fotoanzeige</title>
+    <HTA:APPLICATION 
+     ID="oHTA"
+     APPLICATIONNAME="maxvalue.betterphotoview"
+     VERSION="1.0"
+     SINGLEINSTANCE="no"
+
+     SCROLL="no"
+    >
+    <style type="text/css">
+    	body {
+    		background-color: rgb(238,242,250);
+    	}
+      #currentImage {
+        height: inherit;
+      }
+    </style>
+  </head>
+
+  <body onkeypress="handleKeyPress()">
+    <div id="currentImage"></div>
+  </body>
+  <script type="text/vbscript">
+  Set fso = CreateObject("Scripting.FileSystemObject")
+
+  REM images = 
+  REM get list of images in directory and display passed image
+  keyLEFT = 37
+  keyUP = 38
+  keyRIGHT = 39
+  keyDOWN = 40
+  Sub handleKeyPress
+    If window.event.Keycode = keyLEFT Then currentImage.src = images()
+    If window.event.Keycode = keyRIGHT Then currentImage.src = images()
+  End Sub
+  Function functionname()
+    REM code
+  End Function
+
+  REM window.resizeTo 530, 400
+  
+  Sub Window_OnLoad()
+    With New RegExp
+      .Global = True
+      .Pattern = """([^""]+)"""
+      Set c = .Execute(oHTA.CommandLine)
+    End With
+
+    For i = 1 To c.Count - 1
+        REM MsgBox "Arg " & i & " = " & c(i).SubMatches(0)
+    Next
+    currentImage.innerHTML = "<img src=""" & c(1).SubMatches(0) & """>"
+
+  End Sub
+</script>
+</html>
